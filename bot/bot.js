@@ -92,6 +92,22 @@ bot.on('message', async (msg) => {
 
             const analysisResult = await analyzeResume(userState[chatId].jdText, userState[chatId].resumeText);
             
+            // Handle AI Sanity Check Errors
+            if (analysisResult.includes("ERROR_SWAPPED_DOCS") || analysisResult.includes("ERROR_BOTH_RESUMES") || analysisResult.includes("ERROR_BOTH_JDS")) {
+                let errorMsg = "⚠️ **Oops! There is an issue with your documents.**\n\n";
+                if (analysisResult.includes("ERROR_SWAPPED_DOCS")) {
+                    errorMsg += "You accidentally swapped the Job Description and the Resume. The AI detected that the second document was actually the company posting!";
+                } else if (analysisResult.includes("ERROR_BOTH_RESUMES")) {
+                    errorMsg += "You uploaded your Resume both times. Please make sure the first document is the actual Job Description!";
+                } else if (analysisResult.includes("ERROR_BOTH_JDS")) {
+                    errorMsg += "You uploaded the Job Description both times. Please make sure the second document is your actual Candidate Resume!";
+                }
+                
+                errorMsg += "\n\nLet's restart safely! Please send me the **Job Description** again to begin.";
+                userState[chatId] = { state: STATE_WAIT_JD, jdText: null, resumeText: null };
+                return bot.sendMessage(chatId, errorMsg, { parse_mode: 'Markdown' });
+            }
+
             await bot.sendMessage(chatId, analysisResult);
 
             // Professional Feature: Native PDFs!

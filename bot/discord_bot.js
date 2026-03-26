@@ -110,6 +110,22 @@ client.on('messageCreate', async (msg) => {
 
             let analysisResult = await analyzeResume(userState[userId].jdText, userState[userId].resumeText);
             
+            // Handle AI Sanity Check Errors
+            if (analysisResult.includes("ERROR_SWAPPED_DOCS") || analysisResult.includes("ERROR_BOTH_RESUMES") || analysisResult.includes("ERROR_BOTH_JDS")) {
+                let errorMsg = "⚠️ **Oops! There is an issue with your documents.**\n\n";
+                if (analysisResult.includes("ERROR_SWAPPED_DOCS")) {
+                    errorMsg += "You accidentally swapped the Job Description and the Resume. The AI detected that the second document was actually the company posting!";
+                } else if (analysisResult.includes("ERROR_BOTH_RESUMES")) {
+                    errorMsg += "You uploaded your Resume both times. Please make sure the first document is the actual Job Description!";
+                } else if (analysisResult.includes("ERROR_BOTH_JDS")) {
+                    errorMsg += "You uploaded the Job Description both times. Please make sure the second document is your actual Candidate Resume!";
+                }
+                
+                errorMsg += "\n\nLet's restart safely! Please send me the **Job Description** to begin anew.";
+                userState[userId] = { state: STATE_WAIT_JD, jdText: null, resumeText: null };
+                return msg.reply(errorMsg);
+            }
+
             // Discord limits messages to 2000 characters
             if (analysisResult.length > 1900) {
                 const chunks = analysisResult.match(/[\s\S]{1,1900}/g) || [];

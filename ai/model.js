@@ -12,36 +12,46 @@ async function analyzeResume(jdText, resumeText) {
         const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
         const prompt = `
-You are an ATS system acting as a strict, fair applicant tracking system.
+You are an advanced ATS system and expert career coach.
 Compare the following Job Description (JD) and Resume.
 
-Output MUST exactly follow this plain-text format:
+**CRITICAL INSTRUCTION - SANITY CHECK FIRST:**
+Before running the analysis, you must examine the inputs.
+1. If the 'Job Description' looks like a Candidate's Resume, OR the 'Resume' looks like a Job Posting, you MUST abort and output exactly: ERROR_SWAPPED_DOCS
+2. If both inputs appear to be Resumes, output exactly: ERROR_BOTH_RESUMES
+3. If both inputs appear to be Job Descriptions, output exactly: ERROR_BOTH_JDS
+4. If the inputs are valid, proceed with the Match Report below.
 
-Score: [Score out of 100]
+Output MUST exactly follow this highly structured Markdown format with emojis to make it interactive and visually stunning for the user:
 
-Matching Skills:
-- [Skill 1]
-- [Skill 2]
+# 📊 ATS Match Report
+
+**Overall Compatibility Score:** [Score]/100 🎯
+*(Brief 1-line reason for this score based on core requirements)*
+
+### 🟢 Strengths & Matching Skills
+- ✅ **[Skill 1]:** [Where it was found / How it matches]
+- ✅ **[Skill 2]:** [Where it was found / How it matches]
 ...
 
-Missing Skills:
-- [Skill 1]
-- [Skill 2]
+### 🔴 Critical Missing Skills
+- ❌ **[Skill 1]:** [Why it is important for the JD]
+- ❌ **[Skill 2]:** [Why it is important for the JD]
 ...
 
-Weak Points:
-- [Point 1]
-- [Point 2]
+### ⚠️ Areas for Improvement (Weak Points)
+- 📌 [Point 1: Focus on what's lacking in experience/formatting]
+- 📌 [Point 2: Focus on what's lacking in experience/formatting]
 ...
 
-Suggestions:
-- [Suggestion 1]
-- [Suggestion 2]
+### 💡 Strategic Action Plan
+1. 🚀 **[Action Item 1]:** [Detail how they can fix this]
+2. 🚀 **[Action Item 2]:** [Detail how they can fix this]
 ...
 
-Recommendation:
-[Good match / Average match / Poor match]
-
+### 🏁 Final Verdict
+**[Excellent Match 🌟 / Average Match ⚖️ / Poor Match 💔]** 
+*[1 sentence explaining the final decision from an HR perspective]*
 ====================
 Job Description:
 ${jdText}
