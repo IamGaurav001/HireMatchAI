@@ -1,8 +1,9 @@
-const pdfParse = require('pdf-parse');
+const pdf = require('pdf-parse');
 
 async function parsePDFBuffer(buffer) {
     try {
-        const data = await pdfParse(buffer);
+        const parseFn = typeof pdf === 'function' ? pdf : pdf.PDFParse;
+        const data = await parseFn(buffer);
         return data.text;
     } catch (err) {
         console.error("Error parsing PDF:", err);

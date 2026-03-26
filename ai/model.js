@@ -9,7 +9,7 @@ async function analyzeResume(jdText, resumeText) {
         }
 
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
         const prompt = `
 You are an ATS system acting as a strict, fair applicant tracking system.
