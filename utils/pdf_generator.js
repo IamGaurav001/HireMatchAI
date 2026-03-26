@@ -2,21 +2,59 @@ const { mdToPdf } = require('md-to-pdf');
 const path = require('path');
 const fs = require('fs');
 
-/**
- * Converts Markdown Strings into styled PDF files.
- * Returns the absolute paths of the generated PDFs.
- */
 async function generateResumesFromMarkdown(opt1Markdown, opt2Markdown, identifier) {
     const opt1pdfPath = path.join(__dirname, `../Option1_Professional_${identifier}.pdf`);
     const opt2pdfPath = path.join(__dirname, `../Option2_Modern_${identifier}.pdf`);
 
-    // Optional custom CSS for formatting the resume nicely in PDF
     const customCss = `
-        body { font-family: 'Helvetica', 'Arial', sans-serif; font-size: 14px; color: #333; line-height: 1.6; }
-        h1, h2, h3 { color: #2c3e50; }
-        h1 { border-bottom: 2px solid #2c3e50; padding-bottom: 5px; }
-        ul { margin-top: 5px; }
-        li { margin-bottom: 5px; }
+        body { 
+            font-family: 'Times New Roman', Times, serif; 
+            font-size: 10.5pt; 
+            color: #000; 
+            line-height: 1.2; 
+        }
+        h1 { 
+            font-size: 22pt; 
+            text-align: center; 
+            text-transform: uppercase; 
+            margin-bottom: 2px; 
+            margin-top: 0;
+            font-weight: normal;
+        }
+        /* Center the contact info */
+        h1 + p, h1 + div { 
+            text-align: center; 
+            margin-top: 0; 
+            margin-bottom: 12px;
+            font-size: 10.5pt;
+        }
+        h2 { 
+            font-size: 12pt; 
+            text-transform: uppercase; 
+            border-bottom: 1px solid #000; 
+            padding-bottom: 2px; 
+            margin-top: 12px; 
+            margin-bottom: 6px; 
+            font-weight: bold;
+        }
+        h3 { 
+            font-size: 11pt; 
+            margin-top: 8px; 
+            margin-bottom: 4px; 
+            font-weight: normal;
+        }
+        p { margin: 3px 0; }
+        ul { 
+            margin-top: 2px; 
+            margin-bottom: 6px; 
+            padding-left: 18px; 
+        }
+        li { 
+            margin-bottom: 2.5px; 
+            text-align: justify;
+        }
+        a { color: #000; text-decoration: none; }
+        strong { font-weight: bold; }
     `;
 
     try {
@@ -25,7 +63,7 @@ async function generateResumesFromMarkdown(opt1Markdown, opt2Markdown, identifie
             { 
                 dest: opt1pdfPath,
                 css: customCss,
-                pdf_options: { format: 'A4', margin: '20mm' } 
+                pdf_options: { format: 'A4', margin: '12mm' } 
             }
         );
 
@@ -34,7 +72,7 @@ async function generateResumesFromMarkdown(opt1Markdown, opt2Markdown, identifie
             { 
                 dest: opt2pdfPath,
                 css: customCss,
-                pdf_options: { format: 'A4', margin: '20mm' }
+                pdf_options: { format: 'A4', margin: '12mm' }
             }
         );
 

@@ -59,7 +59,6 @@ async function extractText(msg) {
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
 
-    // Ignore commands
     if (msg.text && msg.text.startsWith('/')) return;
 
     if (!userState[chatId] || !userState[chatId].state) {
@@ -68,7 +67,6 @@ bot.on('message', async (msg) => {
 
     const state = userState[chatId].state;
 
-    // Don't interrupt while processing
     if (state === STATE_PROCESSING) {
         return bot.sendMessage(chatId, "⏳ Still processing your previous request... Please wait!");
     }

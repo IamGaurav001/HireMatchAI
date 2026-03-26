@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireMatchAI | Telegram & Discord</title>
+    <meta name="description" content="An AI-powered bot that compares Job Descriptions with your Resume. Get ATS score, missing skills, and detailed recommendations instantly.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="blob-bg blob-1"></div>
+    <div class="blob-bg blob-2"></div>
+    <div class="blob-bg blob-3"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-brain"></i>
+                <span>Hire<span class="highlight">Match</span>AI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#connect" class="nav-cta">Try Now</a>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <div class="badge">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Powered by Google Gemini AI</span>
+                    </div>
+                    <h1 class="stagger-1">Beat the ATS.<br>Land the <span class="gradient-text">Interview.</span></h1>
+                    <p class="stagger-2">Your personal AI recruiter bot for Telegram and Discord. Instantly compare your resume against any job description, uncover missing skills, and get actionable recommendations.</p>
+                    <div class="hero-actions stagger-3">
+                        <a href="https://t.me/Hire_Match_Bot" target="_blank" class="btn btn-primary">
+                            <i class="fa-brands fa-telegram"></i> Start on Telegram
+                        </a>
+                        <a href="https://discord.com/api/oauth2/authorize?client_id=1486600313975734443&permissions=274877903872&scope=bot" target="_blank" class="btn btn-secondary">
+                            <i class="fa-brands fa-discord"></i> Add to Discord
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual stagger-4">
+                    <div class="glass-card mock-chat">
+                        <div class="chat-header">
+                            <div class="bot-info">
+                                <div class="bot-avatar"><i class="fa-solid fa-robot"></i></div>
+                                <div>
+                                    <h4>HireMatchAI</h4>
+                                    <span class="status">Online</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-body">
+                            <div class="message user-msg">
+                                <p><i class="fa-solid fa-file-pdf"></i> Software_Engineer_JD.pdf</p>
+                            </div>
+                            <div class="message user-msg">
+                                <p><i class="fa-solid fa-file-pdf"></i> My_Resume_2026.pdf</p>
+                            </div>
+                            <div class="message bot-msg">
+                                <div class="typing-indicator">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <div class="match-result hidden">
+                                    <h4>🚀 Match Results Ready!</h4>
+                                    <div class="score-circle">85%</div>
+                                    <p><strong>Verdict:</strong> Good Match</p>
+                                    <div class="skills-match">
+                                        <span class="tag tag-green">Node.js</span>
+                                        <span class="tag tag-green">React</span>
+                                        <span class="tag tag-red">Docker</span>
+                                    </div>
+                                    <p class="small-text">View full details below...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Unfair Advantage in Your <span class="gradient-text">Job Hunt</span></h2>
+                    <p>Designed to provide actionable insights, not just generic feedback.</p>
+                </div>
+                <div class="feature-grid">
+                    <div class="glass-card feature-card">
+                        <div class="icon-box icon-purple">
+                            <i class="fa-solid fa-magnifying-glass-chart"></i>
+                        </div>
+                        <h3>Smart ATS Scoring</h3>
+                        <p>Get a precise 0-100 match score evaluating how tightly your resume aligns with the targeted role.</p>
+                    </div>
+                    <div class="glass-card feature-card">
+                        <div class="icon-box icon-blue">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h3>Skill Gap Analysis</h3>
+                        <p>Instantly identifies keywords and technical skills missing from your resume that recruiters are looking for.</p>
+                    </div>
+                    <div class="glass-card feature-card">
+                        <div class="icon-box icon-pink">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3>Actionable Recommendations</h3>
+                        <p>Receive practical, step-by-step suggestions on how to rephrase or improve specific sections of your CV.</p>
+                    </div>
+                    <div class="glass-card feature-card">
+                        <div class="icon-box icon-green">
+                            <i class="fa-regular fa-file-pdf"></i>
+                        </div>
+                        <h3>PDF Auto-Parsing</h3>
+                        <p>Simply drop your PDF files into the chat. Our bot automatically extracts, cleans, and analyzes the text.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works" id="how-it-works">
+            <div class="container">
+                <div class="section-header">
+                    <h2>How It <span class="gradient-text">Works</span></h2>
+                    <p>Three simple steps to supercharge your job application.</p>
+                </div>
+                <div class="steps-container">
+                    <div class="step-card glass-card">
+                        <div class="step-num">01</div>
+                        <i class="fa-solid fa-briefcase step-icon"></i>
+                        <h3>Share Job Description</h3>
+                        <p>Use the /start command and send the text or PDF of the Job Description you are applying for.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-card glass-card">
+                        <div class="step-num">02</div>
+                        <i class="fa-solid fa-file-lines step-icon"></i>
+                        <h3>Upload Resume</h3>
+                        <p>Next, send your current resume (PDF or text). The bot will begin processing instantly.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-card glass-card">
+                        <div class="step-num">03</div>
+                        <i class="fa-solid fa-chart-pie step-icon"></i>
+                        <h3>Get AI Insights</h3>
+                        <p>Receive your personalized, detailed analysis report directly in your chat within seconds.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="connect" id="connect">
+            <div class="container">
+                <div class="connect-box glass-card">
+                    <div class="connect-content">
+                        <h2>Ready to get hired faster?</h2>
+                        <p>Connect with HireMatchAI on your favorite platform and start optimizing your applications right away.</p>
+                        <div class="button-group">
+                            <a href="https://t.me/Hire_Match_Bot" target="_blank" class="btn btn-primary pulse-btn">
+                                <i class="fa-brands fa-telegram"></i> Start on Telegram
+                            </a>
+                            <a href="https://discord.com/api/oauth2/authorize?client_id=1486600313975734443&permissions=274877903872&scope=bot" target="_blank" class="btn btn-secondary pulse-btn">
+                                <i class="fa-brands fa-discord"></i> Add to Discord
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <i class="fa-solid fa-brain"></i>
+                <span>Hire<span class="highlight">Match</span>AI</span>
+            </div>
+            <p>&copy; 2026 HireMatchAI. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

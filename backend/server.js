@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 
 try {
     require('../bot/bot');
@@ -11,9 +12,7 @@ try {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-    res.send('AI Resume Matcher Backend & Bot is running! 🚀');
-});
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.listen(PORT, () => {
     console.log(`[SERVER] Express backend is running on port ${PORT}`);
