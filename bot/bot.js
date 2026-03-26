@@ -1,7 +1,9 @@
 require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
 const { parsePDFBuffer } = require('../parser/pdf');
-const { analyzeResume } = require('../ai/model');
+const { analyzeResume, optimizeResume } = require('../ai/model');
+const { generateResumesFromMarkdown } = require('../utils/pdf_generator');
+const fs = require('fs');
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
 if (!token) {
@@ -21,7 +23,7 @@ const STATE_PROCESSING = 'PROCESSING';
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     userState[chatId] = { state: STATE_WAIT_JD, jdText: null, resumeText: null };
-    bot.sendMessage(chatId, "Welcome to the AI Resume vs JD Matcher Bot! 🤖\n\nPlease send me the **Job Description** first.\nYou can send it as plain text or as a PDF file.");
+    bot.sendMessage(chatId, "Welcome to **HireMatch AI**! 👔\n\nI am your intelligent career co-pilot and ATS analyzer. To begin, please send me the **Job Description** you are targeting (upload as a PDF or send as text).", { parse_mode: 'Markdown' });
 });
 
 async function extractText(msg) {
@@ -73,28 +75,48 @@ bot.on('message', async (msg) => {
 
     try {
         if (state === STATE_WAIT_JD) {
-            bot.sendMessage(chatId, "Reading Job Description...");
+            bot.sendMessage(chatId, "Scanning Job Description... 🔍");
             const jdText = await extractText(msg);
             userState[chatId].jdText = jdText;
             userState[chatId].state = STATE_WAIT_RESUME;
-            return bot.sendMessage(chatId, "✅ Job Description saved!\n\nNow, please send the **Resume** (plain text or PDF).");
+            return bot.sendMessage(chatId, "✅ Job Description securely processed.\n\nNow, please send your **Resume** (as text or PDF) so I can begin the comparative analysis.", { parse_mode: 'Markdown' });
         }
 
         if (state === STATE_WAIT_RESUME) {
-            bot.sendMessage(chatId, "Reading Resume...");
+            bot.sendMessage(chatId, "Evaluating Resume... 📄");
             const resumeText = await extractText(msg);
             userState[chatId].resumeText = resumeText;
             userState[chatId].state = STATE_PROCESSING;
             
-            bot.sendMessage(chatId, "✅ Resume saved!\n\n⏳ Analyzing with AI... This might take a few seconds.");
+            bot.sendMessage(chatId, "✅ Resume received.\n\n⏳ Initializing AI Analysis Engine... Please hold on while I evaluate your profile against the requirements.");
 
             const analysisResult = await analyzeResume(userState[chatId].jdText, userState[chatId].resumeText);
             
             await bot.sendMessage(chatId, analysisResult);
 
+            // Professional Feature: Native PDFs!
+            await bot.sendMessage(chatId, "✨ Earning your next interview:\n\nAs part of our premium service, our AI Engine is actively rewriting your resume to natively align with this specific role. Generating printable PDF drafts for you... ⏳");
+            
+            try {
+                const optimized = await optimizeResume(userState[chatId].jdText, userState[chatId].resumeText);
+                
+                // Now generating actual styled PDFs!
+                const pdfPaths = await generateResumesFromMarkdown(optimized.option1, optimized.option2, chatId);
+
+                await bot.sendDocument(chatId, pdfPaths.opt1pdfPath, { caption: "📄 Draft 1: Traditional & Technical Alignment (Corporate Format)" });
+                await bot.sendDocument(chatId, pdfPaths.opt2pdfPath, { caption: "🚀 Draft 2: Impact-Driven Achievement Focus (Modern Format)" });
+
+                // Cleanup instantly
+                fs.unlinkSync(pdfPaths.opt1pdfPath);
+                fs.unlinkSync(pdfPaths.opt2pdfPath);
+            } catch (optErr) {
+                console.error(optErr);
+                await bot.sendMessage(chatId, "❌ We encountered a brief system error while rendering your PDF drafts. Please try again later.");
+            }
+
             // Reset state
             userState[chatId] = { state: STATE_WAIT_JD, jdText: null, resumeText: null };
-            await bot.sendMessage(chatId, "Finished! 🚀\n\nTo start a new matching process, simply send a new **Job Description**.");
+            await bot.sendMessage(chatId, "✅ Analysis Workflow Complete.\n\nWhenever you are ready to evaluate another opportunity, simply upload a new **Job Description** or type /start to reset.");
             return;
         }
 
